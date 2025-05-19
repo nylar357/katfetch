@@ -76,10 +76,10 @@ The script is designed to be simple and easy to modify. You can add more system 
 
 Example: To add uptime, you could add lines like:
 
-up=$(echo "⏱ ") # Choose an appropriate icon
-uptime_info=$(uptime -p) # Get human-readable uptime
+`up=$(echo "⏱ ") # Choose an appropriate icon`
+`uptime_info=$(uptime -p) # Get human-readable uptime`
 
 # Then add this line inside the EOF block:
-#    $f6$up $t$uptime_info
+    $f6$up $t$uptime_info
 
 Feel free to experiment with different commands and formatting to make it your own!
