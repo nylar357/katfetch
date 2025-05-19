@@ -2,7 +2,7 @@
 
 moon.sh is a simple and visually appealing bash script designed to display key system information directly in your terminal. It leverages standard Linux utilities to provide a quick overview of your environment.
 
-![preview](katkat.png)
+![preview](katkat2.png)
 
 ### Features
     
@@ -86,5 +86,8 @@ Example: To add uptime, you could add lines like:
 
 # Then add this line inside the EOF block:
     $f6$up $t$uptime_info
+# Screenshots
 
-Feel free to experiment with different commands and formatting to make it your own!
+![preview](katkat.png)
+
+![preview](katscript.png)
