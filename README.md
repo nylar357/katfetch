@@ -1,7 +1,10 @@
 ## moon.sh - A Tiny, Aesthetic System Fetch Script
 
 moon.sh is a simple and visually appealing bash script designed to display key system information directly in your terminal. It leverages standard Linux utilities to provide a quick overview of your environment.
-Features
+
+![preview](katkat.png)
+
+### Features
     
     Displays Window Manager name
 
@@ -14,7 +17,7 @@ Features
     Shows the connected WiFi network name
 
 
-Dependencies
+### Dependencies
 
 This script relies on the following external commands:
 
