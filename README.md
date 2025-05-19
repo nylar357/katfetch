@@ -77,6 +77,7 @@ The script is designed to be simple and easy to modify. You can add more system 
 Example: To add uptime, you could add lines like:
 
 `up=$(echo "⏱ ") # Choose an appropriate icon`
+
 `uptime_info=$(uptime -p) # Get human-readable uptime`
 
 # Then add this line inside the EOF block:
