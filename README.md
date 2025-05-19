@@ -1,59 +1,85 @@
-moon.sh - Tiny Colored Fetch Script
-moon.sh is a simple and colorful bash script designed to display essential system information in a visually appealing format directly in your terminal. It's lightweight and uses standard command-line tools to gather information about your system.
+## moon.sh - A Tiny, Aesthetic System Fetch Script
+
+moon.sh is a simple and visually appealing bash script designed to display key system information directly in your terminal. It leverages standard Linux utilities to provide a quick overview of your environment.
 Features
-Displays Window Manager name
-Shows Kernel version
-Indicates current Shell
-Fetches External IP Address
-Shows Internal IP Address
-Displays Wi-Fi Network Name
-Uses ANSI escape codes for color
-Designed to work with Typicons Font for icons (requires installation)
+
+    Displays Window Manager name
+
+    Shows Kernel version
+
+    Indicates the current Shell
+
+    Lists your external IP address
+
+    Shows the connected WiFi network name
+
 Dependencies
-This script relies on several standard Linux command-line utilities. Ensure you have the following installed:
-iwgetid: Part of the wireless-tools package. Used to determine the SSID of the wireless network the system is connected to.
-xprop: A utility for displaying window properties in the X Window System. In this script, it's used to identify and retrieve the name of the current Window Manager.
-curl: A tool to transfer data from or to a server. Used here to fetch the external IP address from ipinfo.io.
-uname: Prints system information. Used to get the kernel release version.
-basename: Strips directory and suffix from filenames. Used to get just the name of the shell from the full path provided by the $SHELL environment variable.
-ip: A utility to show or manipulate routing, network devices, policies, and tunnels. Used as an alternative method to find the internal IP address of an active network interface.
-Additionally, the script uses ANSI escape codes for coloring the output. For the icons to display correctly, you will need a font that supports the Typicons glyphs.
-How to Use
-Save the script as moon.sh (or any name you prefer).
-Make it executable: chmod +x moon.sh
-Run it from your terminal: ./moon.sh
-Customization: Adding More Information
-You can easily modify this script to display other system details by adding commands to fetch the desired information and then including the output in the final cat <<EOF section.
-Here's how you could add information about your CPU or GPU:
-Identify the command: Find a command that provides the information you want.
-CPU Model:
-lshw -class processor: Provides detailed information about the CPU. You'd likely need to parse the output to get just the model name.
-cat /proc/cpuinfo | grep 'model name' | head -n 1 | cut -d ':' -f2 | sed 's/^ *//': A common way to get the CPU model from /proc/cpuinfo.
-GPU Model:
-lshw -class display: Provides information about graphics cards.
-nvidia-smi --query-gpu=name --format=csv,noheader: If you have an NVIDIA GPU and the nvidia-toolkit installed, this command directly outputs the GPU name.
-Add the command to the script: Add a line in the "Items" section to execute the command and store its output in a variable. For example, to get the CPU model:
-# CPU Model
-cpu=$(echo "💻 ") # Add an icon (optional)
-cpu_model="$(cat /proc/cpuinfo | grep 'model name' | head -n 1 | cut -d ':' -f2 | sed 's/^ *//')"
 
-Or for an NVIDIA GPU:
-# GPU Model (NVIDIA)
-gpu=$(echo "🎮 ") # Add an icon (optional)
-gpu_model="$(nvidia-smi --query-gpu=name --format=csv,noheader)"
+This script relies on the following external commands:
 
+    xprop: Used to fetch information about the window manager.
 
-Include the new variable in the output: Add a line in the cat <<EOF section to display the variable's content.
-# ... (existing lines)
-    $f2$sh  $t$shell
-    $f5$ip $t$ipchk
-    $f3$w $t$wifiname
-	$f6$cpu $t$cpu_model # Add this line for CPU
-	$f4$gpu $t$gpu_model # Add this line for GPU (adjust color code as needed)
+    iwgetid: Part of the wireless-tools package, used to get the SSID of the connected wireless network.
 
-────────▄█▀▄   ｃｒｅａｔｅｄ ｂｙ ：
-# ... (rest of the output)
+    uname: Standard utility to get kernel information.
 
+    basename: Standard utility to extract the base name of the shell path.
 
-Remember to choose appropriate icons (if desired) and color codes ($f0 through $f7) for the new lines. You may need to install additional packages like lshw or nvidia-toolkit if you don't have them already.
-Feel free to experiment with other commands to display information like memory usage, disk space, uptime, etc.!
+    curl: Used to fetch the external IP address from ipinfo.io.
+
+    awk, grep, cut, sed: Standard text processing utilities used for parsing output.
+
+    tput: Used to clear the terminal.
+
+Note: The script uses specific Unicode characters for icons. Ensure your terminal and font support these characters (like the Typicons font mentioned in the script comments) for the intended aesthetic.
+How it Works
+
+The script utilizes a combination of command-line tools and text processing to gather system information:
+
+    Window Manager: It uses xprop to find the root window and then query the _NET_WM_NAME property to identify the window manager.
+
+    WiFi Name: It calls iwgetid and parses its output to extract the SSID.
+
+    Kernel & Shell: Standard uname and $SHELL variable with basename are used.
+
+    External IP: curl fetches data from ipinfo.io, which is then parsed to get the IP address.
+
+The script then uses ANSI escape codes to add color and formatting, presenting the information along with decorative elements.
+Installation
+
+    Save the script as moon.sh.
+
+    Make it executable: chmod +x moon.sh
+
+    Ensure you have the necessary dependencies installed (xprop, wireless-tools, curl). On Debian/Ubuntu-based systems, you might install them using:
+
+    sudo apt update
+    sudo apt install x11-utils wireless-tools curl
+
+    (Package names may vary slightly on other distributions).
+
+    Run the script from your terminal: ./moon.sh
+
+Customization and Extending Functionality
+
+The script is designed to be simple and easy to modify. You can add more system information by:
+
+    Identifying the command: Find the bash command that provides the information you want (e.g., df -h for disk usage, free -h for memory usage, uptime for system uptime).
+
+    Parsing the output: Use awk, grep, cut, sed, or other text processing tools to extract the specific piece of data you need from the command's output.
+
+    Assigning to a variable: Store the extracted data in a bash variable.
+
+    Adding an icon: Find a suitable Unicode character or icon font glyph.
+
+    Adding to the cat <<EOF block: Include the new icon and variable in the formatted output section, using the existing color variables ($d, $t, $fX) to maintain the script's aesthetic.
+
+Example: To add uptime, you could add lines like:
+
+up=$(echo "⏱ ") # Choose an appropriate icon
+uptime_info=$(uptime -p) # Get human-readable uptime
+
+# Then add this line inside the EOF block:
+#    $f6$up $t$uptime_info
+
+Feel free to experiment with different commands and formatting to make it your own!
