@@ -3,15 +3,12 @@
 moon.sh is a simple and visually appealing bash script designed to display key system information directly in your terminal. It leverages standard Linux utilities to provide a quick overview of your environment.
 Features
 
-    Displays Window Manager name
+Displays Window Manager name
+Shows Kernel version
+Indicates the current Shell
+Lists your external IP address
+Shows the connected WiFi network name
 
-    Shows Kernel version
-
-    Indicates the current Shell
-
-    Lists your external IP address
-
-    Shows the connected WiFi network name
 
 Dependencies
 
